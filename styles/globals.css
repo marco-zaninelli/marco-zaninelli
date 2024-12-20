@@ -19,3 +19,25 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.base-colour {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background-color: #000;
+  z-index: -2;
+}
+
+.noise {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background-color: #000;
+  background-image: url('../public/img/noise.svg');
+  opacity: .15;
+  z-index: -1;
+}
