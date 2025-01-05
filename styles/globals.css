@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  font-family: 'Roboto Mono', monospace;
+}
+
+h1,h2,h3,h4,h5,h6{
+
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -38,6 +46,6 @@ body {
   bottom: -50%;
   background-color: #000;
   background-image: url('../public/img/noise.svg');
-  opacity: .15;
+  opacity: 1;
   z-index: -1;
 }
