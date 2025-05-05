@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import '../styles/globals.css';
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 
 export default function App({ Component, pageProps }) {
     return (
@@ -8,10 +8,6 @@ export default function App({ Component, pageProps }) {
             <Head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
-                    rel="stylesheet"
-                />
             </Head>
             <Layout>
                 <Component {...pageProps} />

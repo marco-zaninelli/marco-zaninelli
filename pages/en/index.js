@@ -1,11 +1,8 @@
 import Head from "next/head";
 import HomeComponent from "@/components/pages/HomeComponent";
 import HomeContent from "@/content/HomeContent";
-import {useRouter} from "next/router";
 
-export default function Home () {
-    const {locale} = useRouter();
-    const isEnglish = locale === "en";
+export default function HomeEN () {
 
     return (
         <>
@@ -13,7 +10,7 @@ export default function Home () {
                 <title>Marco Zaninelli</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <HomeComponent content={isEnglish ? HomeContent.en : HomeContent.it} />
+            <HomeComponent content={HomeContent.en} />
         </>
     );
 }

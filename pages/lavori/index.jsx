@@ -1,9 +1,9 @@
 import Head from "next/head";
 import {GET_PROJECTS} from "@/utils/queries";
 import {sanityClient} from "@/utils/sanity-client";
-import ProjectsTable from "@/components/ProjectsTable";
+import ProjectsTable from "@/components/general/ProjectsTable";
 import {useState} from "react";
-import ProjectsButton from "@/components/ProjectsButton";
+import ProjectsButton from "@/components/general/ProjectsButton";
 
 export default function Work ({data}) {
     const [selectImage, setSelectImage] = useState(null);

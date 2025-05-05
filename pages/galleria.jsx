@@ -5,7 +5,7 @@ import {urlFor} from "@/utils/image-url";
 import Head from "next/head";
 
 
-export default function Gallery ({galleries}) {
+export default function Galleria ({galleries}) {
     return (
         <>
             <Head>
