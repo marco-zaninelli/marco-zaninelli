@@ -2,50 +2,166 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-  font-family: 'Roboto Mono', monospace;
-}
-
-h1,h2,h3,h4,h5,h6{
-
+/* GENERAL STYLE */
+* {
+    font-family: 'Roboto Mono', monospace;
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    color: var(--foreground);
+    background: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
+/* XS (default for smaller screens) */
+h1 {
+    font-size: 1.75rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+}
+
+h3 {
+    font-size: 1rem;
+}
+
+h4 {
+    font-size: 0.8rem;
+}
+
+p {
+    font-size: 0.75rem;
+    max-width: 500px;
+}
+
+/* SM: ≥640px */
+@media (min-width: 640px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1rem;
+    }
+
+    h4 {
+        font-size: 0.9rem;
+    }
+
+    p {
+        font-size: 0.8rem;
+        max-width: 600px;
+    }
+}
+
+/* MD: ≥1024px */
+@media (min-width: 1024px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+        max-width: 625px;
+    }
+}
+
+/* LG: ≥1280px */
+@media (min-width: 1280px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1.25rem;
+    }
+
+    p {
+        font-size: 1rem;
+        max-width: 650px;
+    }
+}
+
+/* XL: ≥1536px */
+@media (min-width: 1536px) {
+    h1 {
+        font-size: 4rem;
+    }
+
+    h2 {
+        font-size: 2.75rem;
+    }
+
+    h3 {
+        font-size: 1.75rem;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+        max-width: 700px;
+    }
+}
+
+
 .base-colour {
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  right: -50%;
-  bottom: -50%;
-  background-color: #000;
-  z-index: -2;
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background-color: #000;
+    z-index: -2;
 }
 
 .noise {
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  right: -50%;
-  bottom: -50%;
-  background-color: #000;
-  background-image: url('../public/img/noise.svg');
-  opacity: 1;
-  z-index: -1;
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background-color: #000;
+    background-image: url('../public/img/noise.svg');
+    opacity: 1;
+    z-index: -1;
 }

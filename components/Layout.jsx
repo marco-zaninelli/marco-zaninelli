@@ -1,17 +1,25 @@
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import {useTheme} from '@/context/ThemeContext';
+import { useTheme } from '@/context/ThemeContext';
 
-export default function Layout({children}) {
-    const {isDarkMode} = useTheme();
+export default function Layout({ children }) {
+    const { isDarkMode } = useTheme();
 
     return (
         <>
-            <div className="base-colour" style={{backgroundColor: isDarkMode ? '#000' : '#FFF'}}/>
-            <div className="noise"/>
-            {/*<NavBar/>*/}
+            {/* Background Color */}
+            <div
+                className={`fixed inset-0 z-[-2] bg-black`}
+            />
+            {/* Noise Texture */}
+
+            <div
+                className="fixed inset-0 z-[-1] bg-no-repeat bg-cover opacity-15"
+                style={{ backgroundImage: "url('/img/noise.svg')" }}
+            />
+            <NavBar />
             {children}
-            {/*<Footer/>*/}
+            <Footer />
         </>
-    )
+    );
 }
