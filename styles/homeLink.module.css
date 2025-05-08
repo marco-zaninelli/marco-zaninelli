@@ -1,0 +1,42 @@
+.item {
+    position: relative;
+    display: inline-block;
+    height: 35px;
+    padding-top: 15px;
+    margin: 0 25px;
+    background: transparent;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.3s ease-in-out;
+}
+
+.linktext {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    color: #1F9870;
+    text-transform: uppercase;
+    transition: transform 0.3s ease-in-out;
+}
+
+.linktext::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: #187757;
+    transition: transform 0.3s ease-in-out 0.15s, opacity 0.3s ease-in-out 0.15s;
+    z-index: 1;
+}
+
+.item:hover .linktext {
+    transform: scale(1.2);
+    transition-delay: 0.15s;
+}
+
+.item:hover .linktext::before {
+    transform: translateY(30px);
+    opacity: 0;
+    transition-delay: 0s;
+}

@@ -1,6 +1,5 @@
 import Head from "next/head";
 import HomeComponent from "@/components/pages/HomeComponent";
-import HomeContent from "@/content/HomeContent";
 
 export default function HomeEN () {
 
@@ -10,7 +9,7 @@ export default function HomeEN () {
                 <title>Marco Zaninelli</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <HomeComponent content={HomeContent.en} />
+            <HomeComponent isEnglish={true} />
         </>
     );
 }
