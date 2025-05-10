@@ -1,23 +1,21 @@
-import {useRouter} from "next/router";
-import {useCallback} from "react";
-import {supportedLanguages, defaultLocale} from "@/lib/i18n-config";
+import { useRouter } from "next/router";
+import { useCallback } from "react";
 
-export default function LocaleSwitcher () {
-    const {asPath, push} = useRouter();
+export default function LocaleSwitcher() {
+    const router = useRouter();
+    const { locale, locales, asPath } = router;
 
-    const currentLang = supportedLanguages.find(lang => asPath.startsWith(`/${lang}`)) || defaultLocale;
-    const nextLang = supportedLanguages.find(lang => lang !== currentLang) || defaultLocale;
+    // Determine next locale (toggle between available locales)
+    const nextLocale = locales?.find((l) => l !== locale) || locale;
 
     const switchLocale = useCallback(() => {
-        const newPath = asPath.startsWith(`/${currentLang}`)
-            ? asPath.replace(`/${currentLang}`, `/${nextLang}`)
-            : `/${nextLang}${asPath}`;
-        push(newPath);
-    }, [asPath, push, currentLang, nextLang]);
+        // Push to the same path, but with the new locale
+        router.push(asPath, asPath, { locale: nextLocale });
+    }, [router, asPath, nextLocale]);
 
     return (
         <button onClick={switchLocale}>
-            {nextLang.toUpperCase()}
+            {nextLocale.toUpperCase()}
         </button>
     );
 }
