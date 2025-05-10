@@ -11,7 +11,12 @@ export default {
             }
         },
         colors: {
-            accent: "#115740"
+            accent: "#0f6c4d",
+            background: "#171717",
+            foreground: "#ededed"
+        },
+        boxShadow: {
+            'out': '0px 0px 10px rgba(0,0,0,1)',
         }
     },
     plugins: []

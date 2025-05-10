@@ -9,23 +9,28 @@ export default function HomeComponent ({isEnglish}) {
                 <title>Marco Zaninelli</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className={"w-full h-screen flex justify-center items-center flex-col"}>
+            <div className={"w-full h-screen flex justify-center items-center flex-col px-10 sm:px-20"}>
+                <h2 className={"w-full text-center max-w-screen-xl leading-relaxed"}>
                 {isEnglish ? (
                     <>
-                        <h2 className={"text-center max-w-screen-2xl"}>
-                            Hi, I'm Marco, a <HomeInspect tooltip={'A frontend developer creates the visual and interactive parts of a website that users see and use. They write code to build layouts, buttons, menus, and animations, making sure everything looks good and works smoothly on all devices.'}>Frontend Developer</HomeInspect>.
-                            Hi, I’m Marco, a creative developer. My <HomeLink href={"#"}>Portfolio</HomeLink> shows the craft, the <HomeLink href={"#"}>Gallery</HomeLink> shows my soul. Let’s <HomeLink href={'#'}>Collaborate</HomeLink>.</h2>
+                            Hi, I'm Marco, a <HomeInspect
+                            tooltip={"I mix code and design to create interactive websites, apps, and digital art. I turn creative ideas into functional, engaging experiences using both tech and visual skills."}>Creative
+                                                                                                                                                                                                                    Developer</HomeInspect> passionate
+                            about building great experiences.<br />
+                            The <HomeLink href={"#"}>Portfolio</HomeLink> shows my craft and the <HomeLink
+                            href={"#"}>Gallery</HomeLink> shows my soul. Let’s start a <HomeLink href={"#"}>Collaboration</HomeLink>.
                     </>
                 ) : (
                     <>
-                        <h1>
-                            Ciao, sono Marco, un Sviluppatore Creativo appassionato di creare esperienze coinvolgenti. Dai un’occhiata ai miei Lavori e alla mia
-                            Fotografia, e sentiti libero di Contattarmi, mi piacerebbe aiutarti a dare vita al tuo progetto!
-                        </h1>
+                            Ciao, sono Marco, uno <HomeInspect
+                            tooltip={"Scrivo codice e realizzo design per creare siti web interattivi, app e arte digitale. Trasformo idee creative in esperienze funzionali e coinvolgenti, sfruttando competenze tecniche e visive."}>Sviluppatore Creativo</HomeInspect> e creo esperienze digitali innovative.<br />
+                            Il <HomeLink href={"#"}>Portfolio</HomeLink> mostra le mie realizzazioni e la <HomeLink href={"#"}>Galleria</HomeLink> mostra la
+                            mia creatività. Iniziamo una <HomeLink href={"#"}>Collaborazione</HomeLink> assieme.
                     </>
                 )
                 }
-            </main>
+                </h2>
+            </div>
         </>
     );
 }
