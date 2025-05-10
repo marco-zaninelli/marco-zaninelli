@@ -7,16 +7,10 @@
     font-family: 'Roboto Mono', monospace;
 }
 
+/* Always use dark colors by default */
 :root {
-    --background: #ffffff;
-    --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
+    --background: #0a0a0a;
+    --foreground: #ededed;
 }
 
 body {
@@ -26,124 +20,49 @@ body {
 }
 
 /* XS (default for smaller screens) */
-h1 {
-    font-size: 1.75rem;
-}
-
-h2 {
-    font-size: 1.25rem;
-}
-
-h3 {
-    font-size: 1rem;
-}
-
-h4 {
-    font-size: 0.8rem;
-}
-
-p {
-    font-size: 0.75rem;
-    max-width: 500px;
-}
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1rem; }
+h4 { font-size: 0.8rem; }
+p  { font-size: 0.75rem; max-width: 500px; }
 
 /* SM: ≥640px */
 @media (min-width: 640px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-    }
-
-    h3 {
-        font-size: 1rem;
-    }
-
-    h4 {
-        font-size: 0.9rem;
-    }
-
-    p {
-        font-size: 0.8rem;
-        max-width: 600px;
-    }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1rem; }
+    h4 { font-size: 0.9rem; }
+    p  { font-size: 0.8rem; max-width: 600px; }
 }
 
 /* MD: ≥1024px */
 @media (min-width: 1024px) {
-    h1 {
-        font-size: 2.5rem;
-    }
-
-    h2 {
-        font-size: 1.75rem;
-    }
-
-    h3 {
-        font-size: 1.25rem;
-    }
-
-    h4 {
-        font-size: 1rem;
-    }
-
-    p {
-        font-size: 0.9rem;
-        max-width: 625px;
-    }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.25rem; }
+    h4 { font-size: 1rem; }
+    p  { font-size: 0.9rem; max-width: 625px; }
 }
 
 /* LG: ≥1280px */
 @media (min-width: 1280px) {
-    h1 {
-        font-size: 3rem;
-    }
-
-    h2 {
-        font-size: 2rem;
-    }
-
-    h3 {
-        font-size: 1.5rem;
-    }
-
-    h4 {
-        font-size: 1.25rem;
-    }
-
-    p {
-        font-size: 1rem;
-        max-width: 650px;
-    }
+    h1 { font-size: 3rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.25rem; }
+    p  { font-size: 1rem;   max-width: 650px; }
 }
 
 /* XL: ≥1536px */
 @media (min-width: 1536px) {
-    h1 {
-        font-size: 4rem;
-    }
-
-    h2 {
-        font-size: 2.75rem;
-    }
-
-    h3 {
-        font-size: 1.75rem;
-    }
-
-    h4 {
-        font-size: 1.5rem;
-    }
-
-    p {
-        font-size: 1.1rem;
-        max-width: 700px;
-    }
+    h1 { font-size: 4rem; }
+    h2 { font-size: 2.75rem; }
+    h3 { font-size: 1.75rem; }
+    h4 { font-size: 1.5rem; }
+    p  { font-size: 1.1rem; max-width: 700px; }
 }
 
-
+/* Background layers */
 .base-colour {
     position: fixed;
     top: -50%;
