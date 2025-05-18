@@ -10,7 +10,7 @@ export default function Layout({ children }) {
             <div
                 className={`fixed inset-0 z-[-2] bg-black flex items-center`}
             >
-                <Image src={Logo} alt={'Marco Zaninelli Logo'} height={800} width={1800} className="opacity-20 h-auto w-1/2 m-auto" />
+                <Image src={Logo} title={'Marco Zaninelli Personal Website Logo'} alt={'Logo with bold M and Z initials in dark green, representing Marco Zaninelli\'s personal website branding.'} height={800} width={1800} className="opacity-20 h-auto w-1/2 m-auto" />
             </div>
 
             {/* Noise Texture */}

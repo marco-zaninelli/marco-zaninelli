@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { urlFor } from "@/utils/image-url";
+import { urlFor } from "@/services/sanity/image-url";
 
 export default function ProjectsTable({ data, selected }) {
     const [activeIndex, setActiveIndex] = useState(null);
@@ -45,13 +45,13 @@ export default function ProjectsTable({ data, selected }) {
                         onMouseLeave={handleMouseLeave}
                     >
                         <div className="py-4 px-4">
-                            <h4>{String(index + 1).padStart(2, "0")}</h4>
+                            <p>{String(index + 1).padStart(2, "0")}</p>
                         </div>
                         <div className="py-4 px-4">
-                            <h4>{project.title}</h4>
+                            <p>{project.title}</p>
                         </div>
                         <div className="py-4 px-4">
-                            <h4>{project.category}</h4>
+                            <p>{project.category}</p>
                         </div>
                     </div>
                 ))}

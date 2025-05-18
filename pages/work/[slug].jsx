@@ -1,5 +1,5 @@
 import { GET_PROJECT_BY_SLUG } from "@/utils/queries";
-import { sanityClient } from "@/utils/sanity-client";
+import { sanityClient } from "@/services/sanity/sanity-client";
 import Head from "next/head";
 import Image from "next/image";
 

@@ -1,12 +1,3 @@
-export const GET_PROJECTS = `
-  *[_type == "project"] {
-    title,
-    slug,
-    thumbnail,
-    "category": projectCategory->title
-  }
-`;
-
 export const GET_PROJECT_BY_SLUG = `
   *[_type == "project" && slug.current == $slug][0] {
     title,
@@ -42,22 +33,3 @@ export const GET_GALLERY = `
     "images": images
   }
 `;
-
-export const GET_IMAGES_BY_YEAR = `
-  *[_type == "gallery" && year == $year][0] {
-    "images": images[].image,
-    "altTexts": images[].alt,
-    "generatedIds": images[].generatedId
-  }
-`
-
-export const GET_IMAGE_BY_ID = `
-  *[_type == "gallery" && images[]._id in [$id]][0] {
-    images[generatedId == $id][0] {
-      title,
-      image,
-      alt,
-      metadata
-    }
-  }
-`
