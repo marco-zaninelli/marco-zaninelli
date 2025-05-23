@@ -1,109 +1,78 @@
-import {useRef, useState, useEffect, useCallback} from "react";
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 
-export default function ScrollToSelect ({items, onCurrentSelection}) {
+const ITEM_HEIGHT = 35;
+
+export default function ScrollToSelect({ items, onCurrentSelection }) {
     const containerRef = useRef(null);
     const itemRefs = useRef([]);
-    const [selected, setSelected] = useState(0);
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const [bottomPadding, setBottomPadding] = useState(0);
 
-    // Calculate paddings for the list
-    const itemHeight = 35; // px
-    const topPadding = itemHeight - 5;
-
-    // Calculate bottom padding when component mounts and when container size changes
+    // Adjust bottom padding to allow the last item to snap into view
     useEffect(() => {
-        const updateBottomPadding = () => {
-            if (containerRef.current) {
-                const containerHeight = containerRef.current.clientHeight;
-                setBottomPadding(Math.max(containerHeight - itemHeight - topPadding, 0));
-            }
+        const updatePadding = () => {
+            if (!containerRef.current) return;
+            const height = containerRef.current.clientHeight;
+            setBottomPadding(Math.max(height - ITEM_HEIGHT, 0));
         };
 
-        // Initial calculation
-        updateBottomPadding();
+        updatePadding();
+        const observer = new ResizeObserver(updatePadding);
+        if (containerRef.current) observer.observe(containerRef.current);
+        return () => observer.disconnect();
+    }, []);
 
-        // Add resize observer to update padding when container size changes
-        const resizeObserver = new ResizeObserver(updateBottomPadding);
-        if (containerRef.current) {
-            resizeObserver.observe(containerRef.current);
+    // Handle scroll to update the selected index
+    const handleScroll = useCallback(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        const topBoundary = container.getBoundingClientRect().top;
+        const idx = itemRefs.current.findIndex(el => {
+            if (!el) return false;
+            return el.getBoundingClientRect().top >= topBoundary;
+        });
+        const newIndex = idx >= 0 ? idx : selectedIndex;
+
+        if (newIndex !== selectedIndex) {
+            setSelectedIndex(newIndex);
+            onCurrentSelection(newIndex);
         }
+    }, [onCurrentSelection, selectedIndex]);
 
-        return () => resizeObserver.disconnect();
-    }, [itemHeight, topPadding]);
-
-
-    const onScroll = useCallback(() => {
-        if (!containerRef.current) return;
-        const containerRect = containerRef.current.getBoundingClientRect();
-
-        // Find the first visible item after the top padding
-        let bestIdx = selected;
-        const topPadding = itemHeight / 2; // Half item height padding
-
-        for (let idx = 0; idx < itemRefs.current.length; idx++) {
-            const el = itemRefs.current[idx];
-            if (!el) continue;
-
-            const rect = el.getBoundingClientRect();
-            // Check if the element is the first one after the top padding
-            if (rect.top >= containerRect.top + topPadding) {
-                bestIdx = idx;
-                break;
-            }
-        }
-
-        if (bestIdx !== selected) {
-            setSelected(bestIdx);
-        }
-    }, [selected, itemHeight]);
-
-
+    // Attach scroll listener
     useEffect(() => {
-        const c = containerRef.current;
-        if (!c) return;
-        c.addEventListener("scroll", onScroll, {passive: true});
-        onScroll();
-        return () => c.removeEventListener("scroll", onScroll);
-    }, [onScroll]);
+        const container = containerRef.current;
+        if (!container) return;
 
-    useEffect(() => {
-        if (typeof onCurrentSelection === "function") {
-            onCurrentSelection(selected);
-        }
-    }, [selected, onCurrentSelection]);
+        container.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => container.removeEventListener('scroll', handleScroll);
+    }, [handleScroll]);
 
     return (
-
         <section
             ref={containerRef}
-            className="w-full h-full max-w-2xl mx-auto flex flex-col items-center overflow-y-scroll gap-y-[10px]"
-            style={{
-                paddingTop: `${topPadding}px`,
-                paddingBottom: `${bottomPadding}px`
-            }}
+            className="w-full h-full flex flex-col items-center overflow-y-scroll gap-y-2.5 snap-y snap-mandatory smooth-scroll"
+            style={{ paddingBottom: bottomPadding }}
         >
-        {items.map((item, i) => (
+            {items.map((item, index) => (
                 <label
-                    key={i}
-                    ref={el => (itemRefs.current[i] = el)}
+                    key={index}
+                    ref={el => (itemRefs.current[index] = el)}
                     className={`
-              w-[90%] px-5
-              grid grid-cols-[auto,1fr,auto] snap-center ease-in-out duration-300 transition-all rounded-full
-              ${i === selected ? "bg-accent" : ""}
-            `}
-                    style={{
-                        height: `${itemHeight}px`,
-                        lineHeight: `${itemHeight}px`
-                    }}
-
+            w-full px-5 grid grid-cols-[auto,1fr,auto] snap-start transition-all duration-300 ease-in-out rounded-full
+            ${selectedIndex === index ? 'bg-accent' : ''}
+          `}
+                    style={{ height: ITEM_HEIGHT, lineHeight: `${ITEM_HEIGHT}px` }}
                 >
-                    <p className="pr-4">{String(i + 1).padStart(2, "0")}</p>
+                    <p className="pr-4">{String(index + 1).padStart(2, '0')}</p>
                     <p>{item.title}</p>
                     <p>{item.category}</p>
                     <input
                         type="radio"
                         name="items"
-                        checked={i === selected}
+                        checked={selectedIndex === index}
                         readOnly
                         className="appearance-none"
                     />

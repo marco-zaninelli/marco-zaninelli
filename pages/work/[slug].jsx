@@ -12,6 +12,14 @@ export default function Project({ project }) {
         <>
             <Head>
                 <title>{project.title}</title>
+
+                {/*/!* Article Specific (for blog/gallery posts) *!/*/}
+                {/*{type === 'article' && date && (*/}
+                {/*    <>*/}
+                {/*        <meta property="article:published_time" content={date} />*/}
+                {/*        <meta property="og:article:published_time" content={date} />*/}
+                {/*    </>*/}
+                {/*)}*/}
             </Head>
             <main>
                 <div>
