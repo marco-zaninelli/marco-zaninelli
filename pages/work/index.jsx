@@ -13,7 +13,7 @@ import Link from "next/link";
 import HomeLink from "@/components/general/HomeLink";
 
 // Animations
-const bgVariants = {
+const opVariants = {
     initial: {opacity: 0},
     animate: {opacity: 1, transition: {duration: 0.3}},
     exit: {opacity: 0, transition: {duration: 0.3}}
@@ -31,10 +31,12 @@ export default function Work ({mainData, gridData}) {
 
     const [currentSelection, setcurrentSelection] = useState(0);
 
-    const selectedImg = useMemo(
-        () => urlFor(mainData[currentSelection].thumbnail).url(),
-        [mainData, currentSelection]
-    );
+    const selectedImg = useMemo(() => {
+        if (!mainData || !mainData[currentSelection] || !mainData[currentSelection].thumbnail) {
+            return null; // or return a default image URL
+        }
+        return urlFor(mainData[currentSelection].thumbnail).url();
+    }, [mainData, currentSelection]);
 
     return (
         <>
@@ -75,6 +77,8 @@ export default function Work ({mainData, gridData}) {
                 <link rel="dns-prefetch" href="https://cdn.sanity.io" />
 
             </Head>
+
+            {/* Mobile & Tablet View*/}
             <div className="w-full h-screen lg:hidden flex flex-col sm:flex-row">
                 <div
                     className="relative flex-1 h-1/2 sm:w-1/2 sm:h-screen"
@@ -83,7 +87,7 @@ export default function Work ({mainData, gridData}) {
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={selectedImg}
-                            variants={bgVariants}
+                            variants={opVariants}
                             initial="initial"
                             animate="animate"
                             exit="exit"
@@ -110,23 +114,25 @@ export default function Work ({mainData, gridData}) {
                             exit="exit"
                             className="absolute inset-0 z-10 flex justify-center items-center px-4"
                         >
-                            <Link
-                                href={mainData[currentSelection].slug}
-                                className="group w-full max-w-sm flex flex-col items-start rounded-md bg-background p-2"
-                            >
-                                <div className="relative w-full aspect-[3/2] rounded-sm overflow-hidden shadow-lg">
-                                    <Image
-                                        src={selectedImg}
-                                        alt={mainData[currentSelection].thumbnail.alt[locale]}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        priority
-                                    />
-                                </div>
-                                <p className="my-1 mx-2">
-                                    {isEnglish ? "About the project →" : "Scopri il progetto →"}
-                                </p>
-                            </Link>
+                            {mainData[currentSelection] && (
+                                <Link
+                                    href={`/work/${mainData[currentSelection].slug.current}`}
+                                    className="group w-full max-w-sm flex flex-col items-start rounded-md bg-background p-2"
+                                >
+                                    <div className="relative w-full aspect-[3/2] rounded-sm overflow-hidden shadow-lg">
+                                        <Image
+                                            src={selectedImg}
+                                            alt={mainData[currentSelection].thumbnail.alt[locale]}
+                                            layout="fill"
+                                            objectFit="cover"
+                                            priority
+                                        />
+                                    </div>
+                                    <p className="my-1 mx-2">
+                                        {isEnglish ? "About the project →" : "Scopri il progetto →"}
+                                    </p>
+                                </Link>
+                            )}
                         </motion.div>
                     </AnimatePresence>
                 </div>
@@ -147,47 +153,47 @@ export default function Work ({mainData, gridData}) {
                 </div>
             </div>
 
-
-            <main className={'w-screen h-screen hidden lg:block'}>
+            {/* Desktop view */}
+            <div className="w-screen h-screen hidden lg:block">
                 <div className="flex flex-col md:flex-row h-screen">
 
                     {/* Fixed Left Column */}
-                    <div className="w-full md:w-1/2 h-96 overflow-hidden md:h-screen md:relative flex md:items-center justify-center">
-                        <div
-                            className={`absolute transition-opacity duration-500 ${
-                                selectedImg ? "opacity-0" : "opacity-100"
-                            }`}
-                        >
-                            <p className="text-gray-500">Select a Project</p>
-                        </div>
-                        <div
-                            className={`absolute transition-opacity duration-500 ${
-                                selectedImg ? "opacity-100" : "opacity-0"
-                            }`}
-                        >
+                    <div className="w-full md:w-1/2 h-96 md:h-screen overflow-hidden flex items-center justify-center relative">
+                        <AnimatePresence mode="wait">
                             {selectedImg && (
-                                <img
-                                    src={selectedImg}
-                                    alt="Hovered project"
-                                    className="max-w-full max-h-full md:object-contain object-cover"
-                                />
+                                <motion.div
+                                    key={selectedImg}
+                                    variants={opVariants}
+                                    initial="initial"
+                                    animate="animate"
+                                    exit="exit"
+                                    className="relative w-full aspect-[3/2] overflow-hidden max-w-full"
+                                >
+                                    <Image
+                                        src={selectedImg}
+                                        alt="Background"
+                                        layout="fill"
+                                        objectFit="cover"
+                                        className="object-cover"
+                                        priority
+                                    />
+                                </motion.div>
                             )}
-                        </div>
+                        </AnimatePresence>
                     </div>
 
                     {/* Scrollable Right Column */}
                     <div className="w-full md:w-1/2 h-auto md:h-screen overflow-y-auto px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-14">
                         <div className="md:mt-40 flex flex-row items-end gap-x-2">
-                            <h1>PROJECTS</h1>
-                            <h3 className="mb-3">{String(mainData.length).padStart(2, "0")}</h3>
+                            <TableHeader count={mainData.length} isEnglish={isEnglish} />
                         </div>
                         <ProjectsTable
-                            data={gridData}
-                            selected={selectedImg}
+                            items={gridData}
+                            selected={setcurrentSelection}
                         />
                     </div>
                 </div>
-            </main>
+            </div>
         </>
     );
 }
@@ -196,7 +202,7 @@ function TableHeader ({count, isEnglish}) {
     return (
         <div className="flex items-end gap-x-2 px-4">
             <h1 className="text-white">{isEnglish ? "PROJECTS" : "PROGETTI"}</h1>
-            <h3 className="text-white mb-1.5">
+            <h3 className="text-white mb-1.5 lg:mb-2 2xl:mb-3">
                 {String(count).padStart(2, "0")}
             </h3>
         </div>

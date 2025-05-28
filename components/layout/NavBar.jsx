@@ -27,7 +27,7 @@ export default function NavBar () {
     ];
 
     return (
-        <nav className="fixed top-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-50 max-w-screen-2xl mx-auto">
+        <nav className="fixed top-0 left-0 right-0 flex items-center justify-between px-6 py-4 z-20 max-w-screen-2xl mx-auto">
             <div className="flex space-x-6">
                 {navLinks.map(({href, label}) => {
                     const isActive = pathname === href;

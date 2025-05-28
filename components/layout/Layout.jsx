@@ -1,24 +1,9 @@
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import Logo from "@/public/img/logo.svg"
-import Image from "next/image";
 
 export default function Layout({ children }) {
     return (
         <>
-            {/* Background Color */}
-            <div
-                className={`fixed inset-0 z-[-2] bg-black flex items-center`}
-            >
-                <Image src={Logo} title={'Marco Zaninelli Personal Website Logo'} alt={'Logo with bold M and Z initials in dark green, representing Marco Zaninelli\'s personal website branding.'} height={800} width={1800} className="opacity-20 h-auto w-1/2 m-auto" />
-            </div>
-
-            {/* Noise Texture */}
-            <div
-                className="fixed inset-0 z-[-1] bg-no-repeat bg-cover opacity-15"
-                style={{ backgroundImage: "url('/img/noise.svg')" }}
-            />
-
             <NavBar />
             <main className={'overflow-hidden'}>
                 {children}

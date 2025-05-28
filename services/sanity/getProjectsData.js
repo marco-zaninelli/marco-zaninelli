@@ -27,7 +27,8 @@ export default async function getProjectsData () {
         // Content for table
         const gridData = data.map(project => ({
             title: project.title,
-            category: project.category
+            category: project.category,
+            slug: project.slug
         }));
 
         return {
