@@ -1,14 +1,18 @@
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 
-export default function Layout({ children }) {
+export default function Layout({ children, fixed = true }) {
     return (
         <>
-            <NavBar />
-            <main className={'overflow-hidden'}>
+            <NavBar fixed={fixed} />
+            <main
+                className={fixed
+                    ? "overflow-auto"
+                    : "overflow-visible"}
+            >
                 {children}
             </main>
-            <Footer />
+            <Footer fixed={fixed} />
         </>
     );
 }

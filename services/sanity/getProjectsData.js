@@ -17,6 +17,10 @@ export default async function getProjectsData () {
     try {
         const data = await sanityClient.fetch(PROJECTS_QUERY);
 
+        if (!data) {
+            throw new Error("Data not found");
+        }
+
         // Content for the project page
         const mainData = data.map(project => ({
             thumbnail: project.thumbnail,

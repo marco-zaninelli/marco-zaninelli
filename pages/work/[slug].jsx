@@ -1,115 +1,141 @@
-import { GET_PROJECT_BY_SLUG } from "@/utils/queries";
-import { sanityClient } from "@/services/sanity/sanity-client";
+import {sanityClient} from "@/services/sanity/sanity-client";
 import Head from "next/head";
 import Image from "next/image";
+import {useRouter} from "next/router";
+import getProjectBySlug from "@/services/sanity/getProjectBySlug";
+import {PortableText} from "@portabletext/react";
+import {notFound} from "next/navigation";
+import Layout from "@/components/layout/Layout";
+import ExternalTextLink from "@/components/general/ExternalTextLink";
+import {portableTextComponents} from "@/components/util/portableTextComponents";
 
-export default function Project({ project }) {
-    if (!project) {
-        return <p>Project not found</p>;
-    }
+export default function Project ({project}) {
+    const router = useRouter();
+    const {locale} = router;
 
     return (
         <>
             <Head>
                 <title>{project.title}</title>
 
-                {/*/!* Article Specific (for blog/gallery posts) *!/*/}
-                {/*{type === 'article' && date && (*/}
-                {/*    <>*/}
-                {/*        <meta property="article:published_time" content={date} />*/}
-                {/*        <meta property="og:article:published_time" content={date} />*/}
-                {/*    </>*/}
-                {/*)}*/}
             </Head>
-            <main>
-                <div>
-                    <h1>{project.title}</h1>
-                    <p>Category: {project.metadata?.category || "N/A"}</p>
-                    <p>Year: {project.metadata?.year || "N/A"}</p>
-                    <p>Client: {project.metadata?.client || "N/A"}</p>
-                </div>
-                <div>
-                    <h2>Frameworks & Libraries</h2>
-                    <ul>
-                        {project.metadata?.frameworkLibraries?.map((lib, index) => (
-                            <li key={index}>{lib}</li>
-                        )) || <p>N/A</p>}
-                    </ul>
-                </div>
-                <div>
-                    <h2>Design Links</h2>
-                    {project.metadata?.design ? (
-                        <a href={project.metadata.design.url} target="_blank" rel="noopener noreferrer">
-                            {project.metadata.design.designApp}
-                        </a>
-                    ) : (
-                        <p>No design links available</p>
-                    )}
-                </div>
-                <div>
-                    <h2>Code Repository</h2>
-                    {project.metadata?.code ? (
-                        <a href={project.metadata.code.url} target="_blank" rel="noopener noreferrer">
-                            {project.metadata.code.remote}
-                        </a>
-                    ) : (
-                        <p>No code repository available</p>
-                    )}
-                </div>
-                <div>
-                    <h2>Images</h2>
-                    <div className="grid grid-cols-2 gap-4">
-                        {project.images?.map((img, index) => (
-                            <div key={index}>
-                                <Image
-                                    src={img.image}
-                                    alt={img.alt || "Project image"}
-                                    width={300}
-                                    height={200}
-                                    objectFit="cover"
-                                />
-                            </div>
-                        )) || <p>No images available</p>}
+            <Layout fixed={false}>
+                <main className="container mx-auto px-4 max-w-screen-2xl">
+
+                    {/* Thumbnail */}
+                    <div className="mb-8 relative">
+                        <Image
+                            src={project.thumbnail.url}
+                            alt={project.thumbnail.alt[locale]}
+                            title={project.thumbnail.title[locale]}
+                            width={1200}
+                            height={800}
+                            className="object-cover mx-auto"
+                        />
                     </div>
-                </div>
-            </main>
+
+                    <h1 className="text-6xl mb-8 pb-4 uppercase border-b border-white">{project.title}</h1>
+
+                    <div className={"flex flex-col md:flex-row w-full"}>
+                        <div className={"w-full md:w-1/3 mb-8"}>
+                            <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-4">
+
+                                {/* Project Type */}
+                                <dt className="font-semibold text-gray-400">Project Type:</dt>
+                                <dd className="text-white min-w-0 w-fit">
+                                    {project.category || "N/A"}
+                                </dd>
+
+                                {/* Year */}
+                                <dt className="font-semibold text-gray-400">Year:</dt>
+                                <dd className="text-white min-w-0 w-fit">
+                                    {project.year || "N/A"}
+                                </dd>
+
+                                {/* Client */}
+                                <dt className="font-semibold text-gray-400">Client:</dt>
+                                <dd className="text-white min-w-0 w-fit">
+                                    {project.client || "N/A"}
+                                </dd>
+
+                                {/* Libraries */}
+                                {project.frameworkLibraries && project.frameworkLibraries.length > 0 && (
+                                    <>
+                                        <dt className="font-semibold text-gray-400">Libraries:</dt>
+                                        <dd className="text-white min-w-0 w-fit">
+                                            <ul className="list-none">
+                                                {project.frameworkLibraries.map((lib, idx) => (
+                                                    <li key={idx}>{lib}</li>
+                                                ))}
+                                            </ul>
+                                        </dd>
+                                    </>
+                                )}
+
+                                {/* Design */}
+                                {project.design && (
+                                    <>
+                                        <dt className="font-semibold text-gray-400">Design:</dt>
+                                        <dd className="text-white">
+                                            <ExternalTextLink href={project.design.url}>{project.design.app}</ExternalTextLink>
+                                        </dd>
+                                    </>
+                                )}
+
+                                {/* Code */}
+                                {project.code && (
+                                    <>
+                                        <dt className="font-semibold text-gray-400">Code:</dt>
+                                        <dd className="text-white">
+                                            <ExternalTextLink href={project.code.url}>{project.code.remote}</ExternalTextLink>
+                                        </dd>
+                                    </>
+                                )}
+                            </dl>
+                        </div>
+
+                        <div className="w-full md:w-2/3">
+                            {/* Content */}
+                            {project.content && project.content[locale] && (
+                                <div className="prose prose-invert max-w-none">
+                                    <PortableText
+                                        value={project.content[locale]}
+                                        components={portableTextComponents}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </main>
+            </Layout>
         </>
     );
 }
 
-export async function getStaticPaths() {
+export async function getStaticProps({ params, locale }) {
+    const project = await getProjectBySlug(params.slug, locale);
+    if (!project) {
+        return { notFound: true };
+    }
+    return {
+        props: { project, locale },
+        revalidate: 60,
+    };
+}
+
+export async function getStaticPaths () {
     const projects = await sanityClient.fetch(`
-      *[_type == "project"] {
-        "slug": slug.current
-      }
+        *[_type == "project"] {
+            "slug": slug.current
+        }
     `);
 
     const paths = projects.map((project) => ({
-        params: { slug: project.slug },
+        params: {slug: project.slug}
     }));
 
     return {
         paths,
-        fallback: true,
+        fallback: "blocking"
     };
-}
-
-export async function getStaticProps({ params }) {
-    try {
-        const project = await sanityClient.fetch(GET_PROJECT_BY_SLUG, { slug: params.slug });
-
-        return {
-            props: {
-                project,
-            },
-            revalidate: 10,
-        };
-    } catch (error) {
-        console.error("Error fetching project:", error);
-        return {
-            props: {
-                project: null,
-            },
-        };
-    }
 }

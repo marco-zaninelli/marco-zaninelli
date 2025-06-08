@@ -1,5 +1,5 @@
 import Head from "next/head";
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import ScrollToSelect from "@/components/general/ScrollToSelect";
 import ProjectsTable from "@/components/general/ProjectsTable";
 import {useRouter} from "next/router";
@@ -7,10 +7,8 @@ import getProjectsData from "@/services/sanity/getProjectsData";
 import Image from "next/image";
 import {urlFor} from "@/services/sanity/image-url";
 import {AnimatePresence, motion} from "framer-motion";
-
-import defaultThumbnail from "@/public/img/logo.svg";
 import Link from "next/link";
-import HomeLink from "@/components/general/HomeLink";
+import Layout from "@/components/layout/Layout";
 
 // Animations
 const opVariants = {
@@ -29,7 +27,24 @@ export default function Work ({mainData, gridData}) {
     const {locale} = useRouter();
     const isEnglish = locale === "en";
 
-    const [currentSelection, setcurrentSelection] = useState(0);
+    // Initialize with null
+    const [currentSelection, setCurrentSelection] = useState(null);
+
+    useEffect(() => {
+        const setInitialSelection = () => {
+            if (window.innerWidth < 1024) {
+                setCurrentSelection(0);
+            } else {
+                setCurrentSelection(null);
+            }
+        };
+        setInitialSelection();
+
+        window.addEventListener("resize", setInitialSelection);
+
+        return () => window.removeEventListener("resize", setInitialSelection);
+    }, []);
+
 
     const selectedImg = useMemo(() => {
         if (!mainData || !mainData[currentSelection] || !mainData[currentSelection].thumbnail) {
@@ -78,122 +93,124 @@ export default function Work ({mainData, gridData}) {
 
             </Head>
 
-            {/* Mobile & Tablet View*/}
-            <div className="w-full h-screen lg:hidden flex flex-col sm:flex-row">
-                <div
-                    className="relative flex-1 h-1/2 sm:w-1/2 sm:h-screen"
-                >
-                    {/* Blurred BG */}
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={selectedImg}
-                            variants={opVariants}
-                            initial="initial"
-                            animate="animate"
-                            exit="exit"
-                            className="absolute inset-0 z-0 overflow-hidden blur-sm"
-                        >
-                            <Image
-                                src={selectedImg}
-                                alt="Background"
-                                layout="fill"
-                                objectFit="cover"
-                                className="object-cover w-full h-full"
-                                priority
-                            />
-                        </motion.div>
-                    </AnimatePresence>
-
-                    {/* Animated card */}
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={currentSelection}
-                            variants={cardVariants}
-                            initial="initial"
-                            animate="animate"
-                            exit="exit"
-                            className="absolute inset-0 z-10 flex justify-center items-center px-4"
-                        >
-                            {mainData[currentSelection] && (
-                                <Link
-                                    href={`/work/${mainData[currentSelection].slug.current}`}
-                                    className="group w-full max-w-sm flex flex-col items-start rounded-md bg-background p-2"
-                                >
-                                    <div className="relative w-full aspect-[3/2] rounded-sm overflow-hidden shadow-lg">
-                                        <Image
-                                            src={selectedImg}
-                                            alt={mainData[currentSelection].thumbnail.alt[locale]}
-                                            layout="fill"
-                                            objectFit="cover"
-                                            priority
-                                        />
-                                    </div>
-                                    <p className="my-1 mx-2">
-                                        {isEnglish ? "About the project →" : "Scopri il progetto →"}
-                                    </p>
-                                </Link>
-                            )}
-                        </motion.div>
-                    </AnimatePresence>
-                </div>
-
-                {/* Table header */}
-                <div className="sm:hidden mt-3 mb-1 max-w-2xl">
-                    <TableHeader count={mainData.length} isEnglish={isEnglish} />
-                </div>
-
-                {/* Table */}
-                <div className="px-4 mx-auto w-full h-1/2 sm:w-1/2 sm:h-screen max-w-2xl flex flex-col">
-                    <div className="hidden sm:flex h-1/3">
-                        <TableHeader count={mainData.length} isEnglish={isEnglish} />
-                    </div>
-                    <div className="flex-1 sm:h-2/3 overflow-y-auto">
-                        <ScrollToSelect items={gridData} onCurrentSelection={setcurrentSelection} />
-                    </div>
-                </div>
-            </div>
-
-            {/* Desktop view */}
-            <div className="w-screen h-screen hidden lg:block">
-                <div className="flex flex-col md:flex-row h-screen">
-
-                    {/* Fixed Left Column */}
-                    <div className="w-full md:w-1/2 h-96 md:h-screen overflow-hidden flex items-center justify-center relative">
+            <Layout>
+                {/* Mobile & Tablet View*/}
+                <div className="w-full h-screen lg:hidden flex flex-col sm:flex-row">
+                    <div
+                        className="relative flex-1 h-1/2 sm:w-1/2 sm:h-screen"
+                    >
+                        {/* Blurred BG */}
                         <AnimatePresence mode="wait">
-                            {selectedImg && (
-                                <motion.div
-                                    key={selectedImg}
-                                    variants={opVariants}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                    className="relative w-full aspect-[3/2] overflow-hidden max-w-full"
-                                >
-                                    <Image
-                                        src={selectedImg}
-                                        alt="Background"
-                                        layout="fill"
-                                        objectFit="cover"
-                                        className="object-cover"
-                                        priority
-                                    />
-                                </motion.div>
-                            )}
+                            <motion.div
+                                key={selectedImg}
+                                variants={opVariants}
+                                initial="initial"
+                                animate="animate"
+                                exit="exit"
+                                className="absolute inset-0 z-0 overflow-hidden blur-sm"
+                            >
+                                <Image
+                                    src={selectedImg}
+                                    alt="Background"
+                                    layout="fill"
+                                    objectFit="cover"
+                                    className="object-cover w-full h-full"
+                                    priority
+                                />
+                            </motion.div>
+                        </AnimatePresence>
+
+                        {/* Animated card */}
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentSelection}
+                                variants={cardVariants}
+                                initial="initial"
+                                animate="animate"
+                                exit="exit"
+                                className="absolute inset-0 z-10 flex justify-center items-center px-4"
+                            >
+                                {mainData[currentSelection] && (
+                                    <Link
+                                        href={`/work/${mainData[currentSelection].slug.current}`}
+                                        className="group w-full max-w-sm flex flex-col items-start rounded-md bg-background p-2"
+                                    >
+                                        <div className="relative w-full aspect-[3/2] rounded-sm overflow-hidden shadow-lg">
+                                            <Image
+                                                src={selectedImg}
+                                                alt={mainData[currentSelection].thumbnail.alt[locale]}
+                                                layout="fill"
+                                                objectFit="cover"
+                                                priority
+                                            />
+                                        </div>
+                                        <p className="my-1 mx-2">
+                                            {isEnglish ? "About the project →" : "Scopri il progetto →"}
+                                        </p>
+                                    </Link>
+                                )}
+                            </motion.div>
                         </AnimatePresence>
                     </div>
 
-                    {/* Scrollable Right Column */}
-                    <div className="w-full md:w-1/2 h-auto md:h-screen overflow-y-auto px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-14">
-                        <div className="md:mt-40 flex flex-row items-end gap-x-2">
+                    {/* Table header */}
+                    <div className="sm:hidden mt-3 mb-1 max-w-2xl">
+                        <TableHeader count={mainData.length} isEnglish={isEnglish} />
+                    </div>
+
+                    {/* Table */}
+                    <div className="px-4 mx-auto w-full h-1/2 sm:w-1/2 sm:h-screen max-w-2xl flex flex-col">
+                        <div className="hidden sm:flex h-1/3">
                             <TableHeader count={mainData.length} isEnglish={isEnglish} />
                         </div>
-                        <ProjectsTable
-                            items={gridData}
-                            selected={setcurrentSelection}
-                        />
+                        <div className="flex-1 sm:h-2/3 overflow-y-auto">
+                            <ScrollToSelect items={gridData} onCurrentSelection={setCurrentSelection} />
+                        </div>
                     </div>
                 </div>
-            </div>
+
+                {/* Desktop view */}
+                <div className="w-screen h-screen hidden lg:block">
+                    <div className="flex flex-col md:flex-row h-screen">
+
+                        {/* Fixed Left Column */}
+                        <div className="w-full md:w-1/2 h-96 md:h-screen overflow-hidden flex items-center justify-center relative">
+                            <AnimatePresence mode="wait">
+                                {selectedImg && (
+                                    <motion.div
+                                        key={selectedImg}
+                                        variants={opVariants}
+                                        initial="initial"
+                                        animate="animate"
+                                        exit="exit"
+                                        className="relative w-full aspect-[3/2] overflow-hidden max-w-full"
+                                    >
+                                        <Image
+                                            src={selectedImg}
+                                            alt="Background"
+                                            layout="fill"
+                                            objectFit="cover"
+                                            className="object-cover"
+                                            priority
+                                        />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Scrollable Right Column */}
+                        <div className="w-full md:w-1/2 h-auto md:h-screen overflow-y-auto px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 2xl:px-14">
+                            <div className="md:mt-40 flex flex-row items-end gap-x-2">
+                                <TableHeader count={mainData.length} isEnglish={isEnglish} />
+                            </div>
+                            <ProjectsTable
+                                items={gridData}
+                                selected={setCurrentSelection}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </Layout>
         </>
     );
 }

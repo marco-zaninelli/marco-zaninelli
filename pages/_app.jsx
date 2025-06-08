@@ -5,7 +5,7 @@ import Layout from "@/components/layout/Layout";
 import Background from "@/components/layout/Background";
 import Loader from "@/components/layout/Loader";
 
-export default function App({Component, pageProps}) {
+export default function App ({Component, pageProps}) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [showPage, setShowPage] = useState(true);
@@ -40,9 +40,7 @@ export default function App({Component, pageProps}) {
             <Background />
             <Loader loading={loading} onStartExit={handleLoaderExitComplete} />
             {showPage && (
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
+                <Component {...pageProps} />
             )}
         </>
     );

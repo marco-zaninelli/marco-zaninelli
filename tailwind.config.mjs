@@ -14,9 +14,6 @@ export default {
                 background: "#171717",
                 foreground: "#ededed",
             },
-            boxShadow: {
-                out: "0px 0px 10px rgba(0,0,0,1)",
-            },
         },
     },
 
