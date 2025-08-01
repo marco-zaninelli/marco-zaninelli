@@ -10,7 +10,8 @@ import {AnimatePresence, motion} from "framer-motion";
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 
-import HoverCTA from "@/public/img/Hover CTA.png"
+import CTAEnglish from '@/public/img/CTA english.png'
+import CTAItalian from '@/public/img/CTA italian.png'
 
 // Animations
 const opVariants = {
@@ -50,7 +51,7 @@ export default function Work ({mainData, gridData}) {
 
     const selectedImg = useMemo(() => {
         if (!mainData || !mainData[currentSelection] || !mainData[currentSelection].thumbnail) {
-            return HoverCTA;
+            return isEnglish ? CTAEnglish : CTAItalian;
         }
         return urlFor(mainData[currentSelection].thumbnail).url();
     }, [mainData, currentSelection]);
