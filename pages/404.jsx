@@ -1,11 +1,11 @@
 // pages/404.jsx
-import { useRouter } from 'next/router';
-import Head from 'next/head';
-import Link from 'next/link';
+import {useRouter} from "next/router";
+import Head from "next/head";
+import HomeLink from "@/components/general/HomeLink";
 
-export default function Custom404() {
-    const { locale } = useRouter();
-    const isEnglish = locale === 'en';
+export default function Custom404 () {
+    const {locale} = useRouter();
+    const isEnglish = locale === "en";
 
     return (
         <>
@@ -19,12 +19,11 @@ export default function Custom404() {
                         ? "The page you're looking for doesn't exist."
                         : "La pagina che stai cercando non esiste."}
                 </p>
-                <Link
-                    href="/"
-                    className="border border-white px-4 py-2 hover:bg-white hover:text-black transition-colors"
-                >
-                    {isEnglish ? "Back to Home" : "Torna alla Home"}
-                </Link>
+                <HomeLink href="/">
+                    <p className={'text-md p-1'}>
+                        {isEnglish ? "Back to Home" : "Torna alla Home"}
+                    </p>
+                </HomeLink>
             </div>
         </>
     );

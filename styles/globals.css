@@ -32,7 +32,7 @@ p  { font-size: 0.75rem; }
     h2 { font-size: 1.5rem; }
     h3 { font-size: 1rem; }
     h4 { font-size: 0.9rem; }
-    p  { font-size: 0.8rem; }
+    p  { font-size: 0.8rem; max-width: 625px; }
 }
 
 /* MD: ≥1024px */

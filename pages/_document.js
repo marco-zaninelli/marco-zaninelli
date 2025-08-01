@@ -1,16 +1,21 @@
 import Document, {Html, Head, Main, NextScript} from "next/document";
 
+import Logo_32 from "@/public/logo_32.png"
+import Logo_16 from "@/public/logo_16.png"
+import AppleTouchLogo from "@/public/apple-touch-icon.png"
+import Manifest from "@/public/site.webmanifest"
+
 class MyDocument extends Document {
     render () {
         return (
             <Html>
                 <Head>
                     {/* Favicon and Icons */}
-                    {/*<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png TODO: add favicon 32x32" />*/}
-                    {/*<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png TODO: add favicon 16x16" />*/}
-                    {/*<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png TODO: add apple touch icon" />*/}
-                    {/*<link rel="manifest" href="/site.webmanifest TODO: add manifest" />*/}
-                    {/*<meta name="theme-color" content="#ffffff TODO: add color theme" />*/}
+                    <link rel="icon" type="image/png" sizes="32x32" href={Logo_32} />
+                    <link rel="icon" type="image/png" sizes="16x16" href={Logo_16} />
+                    <link rel="apple-touch-icon" sizes="180x180" href={AppleTouchLogo} />
+                    <link rel="manifest" href={Manifest} />
+                    <meta name="theme-color" content="#000000" />
 
                     {/* Fonts */}
                     <link rel="preconnect" href="https://fonts.googleapis.com" />

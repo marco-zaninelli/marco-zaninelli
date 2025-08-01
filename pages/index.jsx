@@ -33,7 +33,7 @@ export default function Home () {
                                                                                                                                                                                                                                             Creativo</HomeInspect> e
                                 creo esperienze digitali innovative.<br />
                                 Il <HomeLink href={"/portfolio"}>Portfolio</HomeLink> mostra le mie realizzazioni e la <HomeLink
-                                href={"/galleria.jsx"}>Galleria</HomeLink> mostra la
+                                href={"/galleria"}>Galleria</HomeLink> mostra la
                                 mia creatività. Iniziamo una <HomeLink href={"#"}>Collaborazione</HomeLink> assieme.
                             </>
                         )

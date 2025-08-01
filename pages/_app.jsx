@@ -5,6 +5,7 @@ import Background from "@/components/layout/Background";
 import Loader from "@/components/layout/Loader";
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
+import CookieBanner from "@/components/general/CookieBanner";
 config.autoAddCss = false
 
 export default function App ({Component, pageProps}) {
@@ -12,6 +13,7 @@ export default function App ({Component, pageProps}) {
     const [loading, setLoading] = useState(false);
     const [showPage, setShowPage] = useState(true);
 
+    // Pages loading animation
     useEffect(() => {
         const handleStart = () => {
             setShowPage(false);
@@ -37,6 +39,30 @@ export default function App ({Component, pageProps}) {
         setShowPage(true);
     };
 
+    // Google Analytics
+    useEffect(() => {
+        const consent = localStorage.getItem("cookie-consent");
+        const isPrivacyPage = router.pathname === "/privacy";
+
+        if (consent === "accepted" && !isPrivacyPage) {
+            const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+
+            const script1 = document.createElement("script");
+            script1.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+            script1.async = true;
+            document.head.appendChild(script1);
+
+            const script2 = document.createElement("script");
+            script2.innerHTML = `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${GA_ID}', { anonymize_ip: true });
+      `;
+            document.head.appendChild(script2);
+        }
+    }, [router.pathname]);
+
     return (
         <>
             <Background />
@@ -44,6 +70,7 @@ export default function App ({Component, pageProps}) {
             {showPage && (
                 <Component {...pageProps} />
             )}
+            {router.pathname !== "/privacy" && <CookieBanner />}
         </>
     );
 }
