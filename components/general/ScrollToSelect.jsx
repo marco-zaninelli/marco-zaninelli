@@ -61,8 +61,8 @@ export default function ScrollToSelect({ items, onCurrentSelection }) {
                     key={index}
                     ref={el => (itemRefs.current[index] = el)}
                     className={`
-            w-full px-5 grid grid-cols-[auto,1fr,auto] snap-start transition-all duration-300 ease-in-out rounded-full
-            ${selectedIndex === index ? 'bg-accent' : ''}
+            w-full px-5 grid grid-cols-[auto,1fr,auto] snap-start transition-all duration-300 ease-in-out border
+            ${selectedIndex === index ? 'border-white' : 'border-transparent'}
           `}
                     style={{ height: ITEM_HEIGHT, lineHeight: `${ITEM_HEIGHT}px` }}
                 >

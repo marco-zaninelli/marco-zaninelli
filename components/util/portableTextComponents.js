@@ -7,13 +7,14 @@ export const portableTextComponents = {
         reference: ({value}) => {
             if (value.image) {
                 return (
-                    <div className="my-8">
+                    <div className="mt-8 mb-2">
                         <Image
                             src={urlFor(value.image.asset).url()}
                             alt={value.image.alt || ""}
+                            title={value.image.title || ""}
                             width={800}
                             height={400}
-                            className="object-cover"
+                            className="object-cover h-auto w-auto"
                         />
                     </div>
                 );

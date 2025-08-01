@@ -10,6 +10,8 @@ import {AnimatePresence, motion} from "framer-motion";
 import Link from "next/link";
 import Layout from "@/components/layout/Layout";
 
+import HoverCTA from "@/public/img/Hover CTA.png"
+
 // Animations
 const opVariants = {
     initial: {opacity: 0},
@@ -28,7 +30,7 @@ export default function Work ({mainData, gridData}) {
     const isEnglish = locale === "en";
 
     // Initialize with null
-    const [currentSelection, setCurrentSelection] = useState(null);
+    const [currentSelection, setCurrentSelection] = useState(0);
 
     useEffect(() => {
         const setInitialSelection = () => {
@@ -48,7 +50,7 @@ export default function Work ({mainData, gridData}) {
 
     const selectedImg = useMemo(() => {
         if (!mainData || !mainData[currentSelection] || !mainData[currentSelection].thumbnail) {
-            return null; // or return a default image URL
+            return HoverCTA;
         }
         return urlFor(mainData[currentSelection].thumbnail).url();
     }, [mainData, currentSelection]);
@@ -132,7 +134,7 @@ export default function Work ({mainData, gridData}) {
                             >
                                 {mainData[currentSelection] && (
                                     <Link
-                                        href={`/work/${mainData[currentSelection].slug.current}`}
+                                        href={`/portfolio/${mainData[currentSelection].slug}`}
                                         className="group w-full max-w-sm flex flex-col items-start rounded-md bg-background p-2"
                                     >
                                         <div className="relative w-full aspect-[3/2] rounded-sm overflow-hidden shadow-lg">
@@ -170,7 +172,7 @@ export default function Work ({mainData, gridData}) {
                 </div>
 
                 {/* Desktop view */}
-                <div className="w-screen h-screen hidden lg:block">
+                <div className="w-screen h-screen hidden lg:block max-w-[1800px] mx-auto">
                     <div className="flex flex-col md:flex-row h-screen">
 
                         {/* Fixed Left Column */}
@@ -188,8 +190,8 @@ export default function Work ({mainData, gridData}) {
                                         <Image
                                             src={selectedImg}
                                             alt="Background"
-                                            layout="fill"
-                                            objectFit="cover"
+                                            width={1200}
+                                            height={800}
                                             className="object-cover"
                                             priority
                                         />

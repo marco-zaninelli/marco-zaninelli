@@ -23,8 +23,8 @@ export default function Home () {
                                 tooltip={"I mix code and design to create interactive websites, apps, and digital art. I turn creative ideas into functional, engaging experiences using both tech and visual skills."}>Creative
                                                                                                                                                                                                                         Developer</HomeInspect> passionate
                                 about building great experiences.<br />
-                                The <HomeLink href={"/work"}>Portfolio</HomeLink> shows my craft and the <HomeLink
-                                href={"/gallery"}>Gallery</HomeLink> shows my soul. Let’s start a <HomeLink href={"#"}>Collaboration</HomeLink>.
+                                The <HomeLink href={"/portfolio"}>Portfolio</HomeLink> shows my craft and the <HomeLink
+                                href={"/galleria.jsx"}>Gallery</HomeLink> shows my soul. Let’s start a <HomeLink href={"#"}>Collaboration</HomeLink>.
                             </>
                         ) : (
                             <>
@@ -32,8 +32,8 @@ export default function Home () {
                                 tooltip={"Scrivo codice e realizzo design per creare siti web interattivi, app e arte digitale. Trasformo idee creative in esperienze funzionali e coinvolgenti, sfruttando competenze tecniche e visive."}>Sviluppatore
                                                                                                                                                                                                                                             Creativo</HomeInspect> e
                                 creo esperienze digitali innovative.<br />
-                                Il <HomeLink href={"/work"}>Portfolio</HomeLink> mostra le mie realizzazioni e la <HomeLink
-                                href={"/gallery"}>Galleria</HomeLink> mostra la
+                                Il <HomeLink href={"/portfolio"}>Portfolio</HomeLink> mostra le mie realizzazioni e la <HomeLink
+                                href={"/galleria.jsx"}>Galleria</HomeLink> mostra la
                                 mia creatività. Iniziamo una <HomeLink href={"#"}>Collaborazione</HomeLink> assieme.
                             </>
                         )

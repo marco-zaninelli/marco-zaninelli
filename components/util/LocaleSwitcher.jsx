@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 
-export default function LocaleSwitcher() {
+export default function LocaleSwitcher({className}) {
     const router = useRouter();
     const { locale, locales, asPath } = router;
 
@@ -14,7 +14,7 @@ export default function LocaleSwitcher() {
     }, [router, asPath, nextLocale]);
 
     return (
-        <button onClick={switchLocale}>
+        <button onClick={switchLocale} className={className}>
             {nextLocale.toUpperCase()}
         </button>
     );

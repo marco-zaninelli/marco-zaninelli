@@ -1,9 +1,11 @@
 import {useState, useEffect} from "react";
 import {useRouter} from "next/router";
 import "@/styles/globals.css";
-import Layout from "@/components/layout/Layout";
 import Background from "@/components/layout/Background";
 import Loader from "@/components/layout/Loader";
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 
 export default function App ({Component, pageProps}) {
     const router = useRouter();

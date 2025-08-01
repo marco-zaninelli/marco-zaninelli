@@ -20,7 +20,7 @@ export default function ProjectsTable ({items, selected}) {
             <div>
                 {items.map((item, index) => (
                     <Link
-                        href={`/work/${item.slug}` || ""}
+                        href={`/portfolio/${item.slug}` || ""}
                         key={index}
                         className={"grid grid-cols-[auto,1fr,auto] cursor-pointer items-center border border-0  border-b border-white"}
                         onMouseEnter={() => handleMouseEnter(index)}

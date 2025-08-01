@@ -4,7 +4,6 @@ import Image from "next/image";
 import {useRouter} from "next/router";
 import getProjectBySlug from "@/services/sanity/getProjectBySlug";
 import {PortableText} from "@portabletext/react";
-import {notFound} from "next/navigation";
 import Layout from "@/components/layout/Layout";
 import ExternalTextLink from "@/components/general/ExternalTextLink";
 import {portableTextComponents} from "@/components/util/portableTextComponents";
@@ -12,6 +11,7 @@ import {portableTextComponents} from "@/components/util/portableTextComponents";
 export default function Project ({project}) {
     const router = useRouter();
     const {locale} = router;
+    const isEnglish = locale === "en";
 
     return (
         <>
@@ -30,30 +30,31 @@ export default function Project ({project}) {
                             title={project.thumbnail.title[locale]}
                             width={1200}
                             height={800}
-                            className="object-cover mx-auto"
+                            className="object-cover h-auto w-auto mx-auto"
+                            priority
                         />
                     </div>
 
                     <h1 className="text-6xl mb-8 pb-4 uppercase border-b border-white">{project.title}</h1>
 
-                    <div className={"flex flex-col md:flex-row w-full"}>
-                        <div className={"w-full md:w-1/3 mb-8"}>
+                    <div className={"flex flex-col-reverse md:flex-row w-full"}>
+                        <div className={"w-full md:w-1/3 border-t border-white md:border-0 pt-2 md:pt-0 mt-4 md:mt-0"}>
                             <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-4">
 
                                 {/* Project Type */}
-                                <dt className="font-semibold text-gray-400">Project Type:</dt>
+                                <dt className="font-semibold text-gray-400">{isEnglish ? "Project type" : "Tipo progetto"}:</dt>
                                 <dd className="text-white min-w-0 w-fit">
                                     {project.category || "N/A"}
                                 </dd>
 
                                 {/* Year */}
-                                <dt className="font-semibold text-gray-400">Year:</dt>
+                                <dt className="font-semibold text-gray-400">{isEnglish ? "Year" : "Anno"}:</dt>
                                 <dd className="text-white min-w-0 w-fit">
                                     {project.year || "N/A"}
                                 </dd>
 
                                 {/* Client */}
-                                <dt className="font-semibold text-gray-400">Client:</dt>
+                                <dt className="font-semibold text-gray-400">{isEnglish ? "Client" : "Cliente"}:</dt>
                                 <dd className="text-white min-w-0 w-fit">
                                     {project.client || "N/A"}
                                 </dd>
@@ -61,7 +62,7 @@ export default function Project ({project}) {
                                 {/* Libraries */}
                                 {project.frameworkLibraries && project.frameworkLibraries.length > 0 && (
                                     <>
-                                        <dt className="font-semibold text-gray-400">Libraries:</dt>
+                                        <dt className="font-semibold text-gray-400">{isEnglish ? "Libraries" : "Librerie"}:</dt>
                                         <dd className="text-white min-w-0 w-fit">
                                             <ul className="list-none">
                                                 {project.frameworkLibraries.map((lib, idx) => (
@@ -85,7 +86,7 @@ export default function Project ({project}) {
                                 {/* Code */}
                                 {project.code && (
                                     <>
-                                        <dt className="font-semibold text-gray-400">Code:</dt>
+                                        <dt className="font-semibold text-gray-400">{isEnglish ? "Code" : "Codice"}:</dt>
                                         <dd className="text-white">
                                             <ExternalTextLink href={project.code.url}>{project.code.remote}</ExternalTextLink>
                                         </dd>
@@ -112,14 +113,14 @@ export default function Project ({project}) {
     );
 }
 
-export async function getStaticProps({ params, locale }) {
+export async function getStaticProps ({params, locale}) {
     const project = await getProjectBySlug(params.slug, locale);
     if (!project) {
-        return { notFound: true };
+        return {notFound: true};
     }
     return {
-        props: { project, locale },
-        revalidate: 60,
+        props: {project, locale},
+        revalidate: 60
     };
 }
 

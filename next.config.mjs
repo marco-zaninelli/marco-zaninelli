@@ -5,8 +5,8 @@ const nextConfig = {
         domains: ["cdn.sanity.io"]
     },
     i18n: {
-        locales: ["en", "it"],
-        defaultLocale: "en"
+        locales: ["it", "en"],
+        defaultLocale: "it"
     },
 };
 
