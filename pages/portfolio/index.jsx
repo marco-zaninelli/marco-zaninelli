@@ -56,44 +56,58 @@ export default function Work ({mainData, gridData}) {
         return urlFor(mainData[currentSelection].thumbnail).url();
     }, [mainData, currentSelection]);
 
+    // Metadata
+    const siteName    = "Marco Zaninelli";
+    const title       = isEnglish
+        ? "Work I'm Proud Of | Marco Zaninelli"
+        : "Progetti & Realizzazioni | Marco Zaninelli";
+    const description = isEnglish
+        ? "Explore my curated portfolio of web development, photography and design projects showcasing creative solutions and business-focused innovations."
+        : "Esplora il mio portfolio di progetti di sviluppo web, fotografia e design, con soluzioni creative e innovazioni orientate al business.";
+    const baseUrl     = process.env.NEXT_PUBLIC_SITE_URL || "https://www.marco.zaninelli.me";
+    const fullUrl     = `${baseUrl}${locale === "en" ? "/en" : ""}/portfolio}`;
+    const imagePath   = "/img/projects-thumbnail.png";
+    const fullImage   = `${baseUrl}${imagePath}`;
+
     return (
         <>
             <Head>
-                {/* Essential Meta Tags */}
-                <title>{isEnglish ? "Work I am proud of" : "Progetti & Realizzazioni"} | Marco Zaninelli</title>
-                {/*<meta name="description" content="TODO: add a description" />*/}
+                {/* Charset & Viewport */}
+                <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
 
-                {/* Canonical URL */}
-                {/*<link rel="canonical" href={fullUrl} />*/}
+                {/* Title & Description */}
+                <title>{title}</title>
+                <meta name="description" content={description} />
+
+                {/* Canonical */}
+                <link rel="canonical" href={fullUrl} />
 
                 {/* Open Graph */}
-                {/*<meta property="og:locale" content={locale} />*/}
-                {/*<meta property="og:site_name" content="Your Name" />*/}
-                {/*<meta property="og:type" content={type} />*/}
-                {/*<meta property="og:title" content={title || defaultTitle} />*/}
-                {/*<meta property="og:description" content={description || defaultDescription} />*/}
-                {/*<meta property="og:image" content={fullImage} />*/}
-                {/*<meta property="og:image:width" content="1200" />*/}
-                {/*<meta property="og:image:height" content="630" />*/}
-                {/*<meta property="og:url" content={fullUrl} />*/}
+                <meta property="og:locale"        content={locale} />
+                <meta property="og:site_name"     content={siteName} />
+                <meta property="og:type"          content="website" />
+                <meta property="og:title"         content={title} />
+                <meta property="og:description"   content={description} />
+                <meta property="og:url"           content={fullUrl} />
+                <meta property="og:image"         content={fullImage} />
+                <meta property="og:image:width"   content="1200" />
+                <meta property="og:image:height"  content="630" />
 
-                {/* Twitter */}
-                {/*<meta name="twitter:card" content="summary_large_image" />*/}
-                {/*<meta name="twitter:site" content="@yourusername" />*/}
-                {/*<meta name="twitter:title" content={title || defaultTitle} />*/}
-                {/*<meta name="twitter:description" content={description || defaultDescription} />*/}
-                {/*<meta name="twitter:image" content={fullImage} />*/}
+                {/* Twitter Card */}
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content={title} />
+                <meta name="twitter:description" content={description} />
+                <meta name="twitter:image"       content={fullImage} />
 
-                {/* Alternate Language versions */}
-                {/*<link rel="alternate" href={`${siteUrl}/en${router.pathname}`} hrefLang="en" />*/}
-                {/*<link rel="alternate" href={`${siteUrl}/it${router.pathname}`} hrefLang="it" />*/}
-                {/*<link rel="alternate" href={`${siteUrl}${router.pathname}`} hrefLang="x-default" />*/}
+                {/* Hreflang per multilanguage */}
+                <link rel="alternate" hrefLang="it"    href={`${baseUrl}/portfolio`} />
+                <link rel="alternate" hrefLang="en"    href={`${baseUrl}/en/portfolio`} />
+                <link rel="alternate" hrefLang="x-default" href={fullUrl} />
 
-                {/* Preconnect to Important Third-party Domains */}
+                {/* Preconnect / Prefetch */}
                 <link rel="preconnect" href="https://cdn.sanity.io" />
                 <link rel="dns-prefetch" href="https://cdn.sanity.io" />
-
             </Head>
 
             <Layout>

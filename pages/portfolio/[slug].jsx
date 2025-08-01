@@ -13,11 +13,61 @@ export default function Project ({project}) {
     const {locale} = router;
     const isEnglish = locale === "en";
 
+    // Metadata
+    const siteName    = "Marco Zaninelli";
+    const title       = `${project.title} | ${siteName}`;
+    const description = project.description?.[locale]
+        ?? (project.excerpt?.[locale] || "");
+    const baseUrl     = process.env.NEXT_PUBLIC_SITE_URL
+        || "https://www.marco.zaninelli.me";
+    const fullUrl     = `${baseUrl}${locale === "en" ? "/en" : ""}${project.slug.current}`;
+    const thumbUrl    = project.thumbnail.url;
+
     return (
         <>
             <Head>
-                <title>{project.title}</title>
+                {/* Titolo e descrizione */}
+                <title>{title}</title>
+                <meta name="description" content={description} />
+                <link rel="canonical" href={fullUrl} />
 
+                {/* Open Graph */}
+                <meta property="og:site_name"    content={siteName} />
+                <meta property="og:locale"       content={locale} />
+                <meta property="og:type"         content="article" />
+                <meta property="og:url"          content={fullUrl} />
+                <meta property="og:title"        content={title} />
+                <meta property="og:description"  content={description} />
+                <meta property="og:image"        content={thumbUrl} />
+                <meta property="og:image:width"  content="1200" />
+                <meta property="og:image:height" content="800" />
+
+                {/* Twitter Card */}
+                <meta name="twitter:card"        content="summary_large_image" />
+                <meta name="twitter:title"       content={title} />
+                <meta name="twitter:description" content={description} />
+                <meta name="twitter:image"       content={thumbUrl} />
+
+                {/* Hreflang */}
+                <link
+                    rel="alternate"
+                    hrefLang="it"
+                    href={`${baseUrl}${project.slug.current}`}
+                />
+                <link
+                    rel="alternate"
+                    hrefLang="en"
+                    href={`${baseUrl}/en${project.slug.current}`}
+                />
+                <link
+                    rel="alternate"
+                    hrefLang="x-default"
+                    href={fullUrl}
+                />
+
+                {/* Preconnect/Prefetch */}
+                <link rel="preconnect" href="https://cdn.sanity.io" />
+                <link rel="dns-prefetch" href="https://cdn.sanity.io" />
             </Head>
             <Layout fixed={false}>
                 <main className="container mx-auto px-4 max-w-screen-2xl">

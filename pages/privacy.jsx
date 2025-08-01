@@ -15,9 +15,10 @@ export default function Privacy() {
         <>
             <Head>
                 <title>{"Privacy & Cookies"}</title>
+                <meta name="robots" content="noindex, nofollow" />
             </Head>
             <Layout fixed={false}>
-                <main className="container mx-auto max-w-screen-lg mb-6 w-full">
+            <main className="container mx-auto max-w-screen-lg mb-6 w-full">
                     <div className={"mx-auto"}>
                         <div className="flex flex-row justify-between items-center">
                             <h1 className="text-4xl font-mono">

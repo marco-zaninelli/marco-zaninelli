@@ -20,7 +20,7 @@ export default function Galleria () {
                         "Restate sintonizzati per nuovi lavori e foto in arrivo!"}</p>
                     <HomeLink href={"portfolio"}>
                         <p className={"text-md p-1"}>
-                            Explore my projects</p>
+                            {isEnglish ? "Explore my projects" : "Esplora i progetti"}</p>
                     </HomeLink>
                 </main>
             </Layout>
