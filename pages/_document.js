@@ -32,6 +32,12 @@ class MyDocument extends Document {
                         href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap"
                         rel="stylesheet"
                     />
+
+                    {/* Google Analytics */}
+                    <script
+                        async
+                        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+                    />
                 </Head>
                 <body>
                 <Main />
